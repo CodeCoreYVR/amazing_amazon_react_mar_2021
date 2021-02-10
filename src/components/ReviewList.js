@@ -6,9 +6,10 @@ export function ReviewList(props) {
   return (
     <div>
       {reviews.map((review) => {
-        let { rating, body, created_at, reviewer } = review
+        let { rating, body, created_at, reviewer, id } = review
         return (
           <ReviewDetails
+            key={id}
             rating={rating}
             body={body}
             reviewerName={reviewer.full_name}
