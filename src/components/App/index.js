@@ -5,7 +5,8 @@ import ProductShowPage from '../ProductShowPage';
 import NavBar from '../NavBar';
 import { Session } from '../../requests';
 import ProductNewPage from '../ProductNewPage';
-import SignInPage from '../SignInPage'
+import SignInPage from '../SignInPage';
+import AuthRoute from '../AuthRoute';
 
 class App extends Component {
     constructor(props) {
@@ -56,10 +57,14 @@ class App extends Component {
             <NavBar currentUser={this.state.user} destroySession={this.destroySession}/>
             <Switch>
             <Route path='/' exact render={() => <div>Hello World</div> } />
-            <Route path='/products/new' component={ProductNewPage} />
-            <Route path='/products/:id' component={ ProductShowPage } />
+            {/*<Route path='/products/new' component={ProductNewPage} />*/}
+            <AuthRoute path='/products/new' isAuth={this.state.user} component={ProductNewPage}/>
+
+            {/*<Route path='/products/:id' component={ ProductShowPage } />*/}
+            <AuthRoute path='/products/:id' isAuth={this.state.user} component={ProductShowPage}/>
             <Route path='/products' exact component={ ProductIndexPage }/>
             <Route path='/sign_in' render={(routeProps)=><SignInPage handleSubmit={this.handleSubmit} {...routeProps}/>} />
+            
             </Switch>
         </BrowserRouter>
         )
