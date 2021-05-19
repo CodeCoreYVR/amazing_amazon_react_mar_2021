@@ -5,12 +5,14 @@ export function ReviewDetails(props) {
   let { rating, body, createdAt, reviewerName } = props
   return (
     <div>
+      <hr/>
       <h3 className='header'>
         <StarRating max={5} currentNumber={rating} />
       </h3>
       <p>body: {body}</p>
       <p>Reviewed by: {reviewerName}</p>
       <p>createdAt: {createdAt}</p>{' '}
+      <hr/>
     </div>
   )
 }
