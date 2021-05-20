@@ -9,9 +9,19 @@ class ProductShowPage extends Component {
   constructor(props){
     super(props);
     this.state = product
+    this.deleteReview = this.deleteReview.bind(this)
   }
+
+  deleteReview(id){
+    this.setState((state) => {
+      return {
+        reviews: state.reviews.filter(r => r.id !== id)
+      }
+    })
+  }
+
   render() {
-    const { title, description, created_at, seller, price, reviews } = this.state
+    const { title, description, created_at, seller, price } = this.state
     return (
       <>
         <ProductDetails
@@ -21,7 +31,10 @@ class ProductShowPage extends Component {
           price={price}
           createdAt={created_at}
         />
-        <ReviewList reviews={reviews} />
+        <ReviewList 
+        reviews={ this.state.reviews }
+        deleteReview = { this.deleteReview } 
+        />
       </>
     )
   }

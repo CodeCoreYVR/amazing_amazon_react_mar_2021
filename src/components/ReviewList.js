@@ -1,7 +1,8 @@
+import React from 'react';
 import { ReviewDetails } from './ReviewDetails'
 
 export function ReviewList(props) {
-  const { reviews } = props
+  const { reviews, deleteReview } = props
 
   return (
     <div>
@@ -10,10 +11,12 @@ export function ReviewList(props) {
         return (
           <ReviewDetails
             key={id}
+            id={id}
             rating={rating}
             body={body}
             reviewerName={reviewer.full_name}
-            createdAt={created_at}
+            createdAt={Date(created_at)}
+            deleteReview={deleteReview}
           />
         )
       })}
