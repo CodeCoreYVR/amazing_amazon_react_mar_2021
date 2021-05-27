@@ -53,7 +53,7 @@ function SignInPage(props) {
         // Naviagte to the index page from the browser
         // We can "push" on history to manipulate the browser
         // and direct our user to any page in our app
-        props.history.push('/questions')
+        props.history.push('/products')
       }
     })
   }

@@ -19,7 +19,7 @@ const SignUpPage = (props) => {
     User.create(params).then(res => {
       if (res?.id) {
         onSignUp() // store user in App state
-        props.history.push('/questions') // navigate to index
+        props.history.push('/products') // navigate to index
       }
     })
   }

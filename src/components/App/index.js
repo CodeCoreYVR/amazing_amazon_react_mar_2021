@@ -9,6 +9,7 @@ import ProductNewPage from '../ProductNewPage';
 import SignInPage from '../SignInPage';
 import AuthRoute from '../AuthRoute';
 import SignUpPage from '../SignUpPage';
+import NotFoundPage from '../NotFoundPage';
 
 class App extends Component {
     constructor(props) {
@@ -76,6 +77,7 @@ class App extends Component {
               component={ProductShowPage}
             />
             <Route path='/products' exact component={ ProductIndexPage }/>
+            <Route component={NotFoundPage} /> 
             </Switch>
         </BrowserRouter>
         )
