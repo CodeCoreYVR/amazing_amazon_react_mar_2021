@@ -1,6 +1,7 @@
 import React from 'react';
+import FormErrors from '../FormErrors'
 
-const NewProductForm = ({ createProduct }) => {
+const NewProductForm = ({ createProduct, errors }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -21,16 +22,19 @@ const NewProductForm = ({ createProduct }) => {
         <label htmlFor='title'>Title</label>
         <br />
         <input name='title' id='title' />
+        <FormErrors forField="title" errors={errors}/>
       </div>
       <div>
         <label htmlFor='description'>Description</label>
         <br />
         <textarea name='description' id='description' />
+        <FormErrors forField="description" errors={errors}/>
       </div>
       <div>
         <label htmlFor='price'>Price</label>
         <br />
         <textarea name='price' id='price' />
+        <FormErrors forField="price" errors={errors}/>
       </div>
       <div>
         <input type='submit' value='Submit' />
