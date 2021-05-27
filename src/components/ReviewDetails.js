@@ -2,7 +2,7 @@ import { StarRating } from './StarRating'
 
 export function ReviewDetails(props) {
   /** This way of destructuring props gives the same result as in Product Details */
-  let { rating, body, createdAt, reviewer } = props
+  let { id, rating, body, createdAt, reviewer, deleteReview } = props
   return (
     <div>
       <hr/>

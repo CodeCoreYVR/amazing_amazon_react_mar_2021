@@ -1,3 +1,5 @@
+import React from 'react'
+
 const ProductDetails = (props) => {
     const { title, seller, description, price, createdAt } = props;
     return (
@@ -11,4 +13,4 @@ const ProductDetails = (props) => {
     )
   }
 
-  export default ProductDetails
+export default ProductDetails;

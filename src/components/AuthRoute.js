@@ -1,31 +1,24 @@
-import React from 'react';
-import {Route, Redirect} from 'react-router-dom'
+import React from 'react'
+import { Route, Redirect } from 'react-router-dom'
 
-//Route 
-// path: so when a path matches to the url it will dsplay the component which is passed
-//component : this props tells that which component to render when path is matched with url.
-//exact: this props requires that the path patches exactly to the url as oppposed the the default behaviour of a Route. 
-
-// Redirect : Rendering a <Redirect> will navigate to a new location. The new location will override the current location in the history stack, like server-side redirects (HTTP 3xx) do
-
-const AuthRoute = props =>{
-    console.log('props:',props)
-    const {isAuth, component:Component, ...restProps} =props
-    console.log('restProps:',restProps)
-    return(
-        <Route 
-        {...restProps}
-        render={
-            (routeProps)=>{
-                if (isAuth){
-                    return <Component {...routeProps}/>
-
-                }else{
-                    return <Redirect to='/sign_in' />
-                }
-            }  
-        }
-        />
-    )
+// We rename component to Component because we want to be clear that
+// the Component is a user defined React component, which should be
+// named in Pascal
+const AuthRoute = ({ 
+  isAuthenticated, 
+  component: Component, 
+  ...routeProps 
+}) => {
+  if (isAuthenticated) {
+    // If user exists, navigate to the component that was passed as 
+    // props. We also want to pass all the routeProps so that they 
+    // will be available. routeProps is going to be an object that has
+    // path, exact, etc...
+    return <Route {...routeProps} component={Component}/>
+  } else {
+    // Redirects to the sign in page
+    return <Redirect to='/sign_in' />
+  }
 }
-export default AuthRoute;
+
+export default AuthRoute

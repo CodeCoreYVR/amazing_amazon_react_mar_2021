@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import ProductDetails from '../ProductDetails'
-import { ReviewDetails } from '../ReviewDetails'
+import ProductDetails from '../ProductDetails';
+import { ReviewDetails } from '../ReviewDetails';
 import { ReviewList } from '../ReviewList'
 import { Product } from '../../requests';
 
@@ -37,6 +37,14 @@ class ProductShowPage extends Component {
         },
     });
   }
+
+  // deleteReview(id){
+  //   this.setState((state) => {
+  //     return {
+  //       reviews: state.reviews.filter(r => r.id !== id)
+  //     }
+  //   })
+  // }
 
   render() {
     const { id, title, description, created_at, seller, reviews, sale_price } = this.state.product;

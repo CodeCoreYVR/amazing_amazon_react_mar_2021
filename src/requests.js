@@ -18,16 +18,28 @@ export const Session = {
       return res.json();
     })
   },
-  currentUser(){
-    return fetch(`${BASE_URL}/current_user`,{
-      credentials: 'include' // We need to include a session in a request so we can fetch that particular user
-    })
-    .then((res)=> res.json())
-  },
   destroy(){
     return fetch(`${BASE_URL}/session`, {
       method: 'Delete',
       credentials: 'include'
+    }).then(res => res.json())
+  }
+}
+
+export const User = {
+  current() {
+    return fetch(`${BASE_URL}/users/current`, {
+      credentials: 'include',
+    }).then(res => res.json())
+  },
+  create(params) {
+    return fetch(`${BASE_URL}/users`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ user: params })
     }).then(res => res.json())
   }
 }
@@ -54,4 +66,5 @@ export const Product = {
       return fetch(`${BASE_URL}/products/${id}`)
         .then(res => res.json())
     }
-  }
+}
+

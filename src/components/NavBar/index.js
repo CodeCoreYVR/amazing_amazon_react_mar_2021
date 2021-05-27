@@ -1,10 +1,13 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { Session } from '../../requests'
 
-function NavBar(props) {
+function NavBar({ currentUser, onSignOut }) {
 
 function handleSignOut(){
-    props.destroySession()
+  Session.destroy().then(() => {
+    onSignOut()
+  })
 }
   return(
     <div>
@@ -14,20 +17,29 @@ function handleSignOut(){
       ||
       <NavLink to='/products/new'>New Product Page</NavLink>
       {
-        props.currentUser ? 
+        currentUser ? 
         (
-        <div>
-            <span>{props.currentUser.first_name}</span> 
+          <React.Fragment>
+          {/* This allows us to write components beside each other without wrapping them in 
+            a parent container. This stops us from messing out the layout and keeps the 
+            NavLinks as a direct child of the <nav>. The short form is <> </>
+          */}
+            <span>Welcome, {currentUser.full_name}</span> 
             ||
             <button onClick={handleSignOut}>Sign Out</button>
-        </div>
+          </React.Fragment>
         )
-        :
+        : (
+        <> 
         <NavLink to='/sign_in'>Sign In</NavLink>
+        ||
+        <NavLink to='/sign_up'>Sign Up</NavLink>
+        </>
+        )
       }
       
     </div>
-  )
+  ) 
 }
 
 export default NavBar 

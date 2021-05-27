@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import ProductIndexPage from '../ProductIndexPage';
 import ProductShowPage from '../ProductShowPage';
-import NavBar from '../NavBar';
 import { Session } from '../../requests';
+import { User } from '../../requests';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import NavBar from '../NavBar';
 import ProductNewPage from '../ProductNewPage';
 import SignInPage from '../SignInPage';
 import AuthRoute from '../AuthRoute';
+import SignUpPage from '../SignUpPage';
 
 class App extends Component {
     constructor(props) {
@@ -14,57 +16,66 @@ class App extends Component {
         this.state = {
             user:null
         }
-        this.handleSubmit=this.handleSubmit.bind(this);
-        this.destroySession=this.destroySession.bind(this);
+        // this.handleSubmit=this.handleSubmit.bind(this);
+        // this.destroySession=this.destroySession.bind(this);
       }
-    
-      //Hacky Sign In to get a cookie before we implement authorization later
-      //this will happen as soon as the app mounts
-      componentDidMount() {
-        Session.currentUser()
-    .then(user=>{
-      console.log('user', user);
-      this.setState((state)=>{
-        return {user:user}
+
+    componentDidMount () {
+      this.getCurrentUser()
+    } 
+
+    // When calling "this.setState", we always want the "this" keyword
+    // to this class itself. If we call it from another component, "this" will
+    // lose its context, e.g. 
+    // <SignInPage onSignIn={this.getCurrentUser} />
+    // We need to either use the ".bind" method in the constructor or
+    // define it like as a class arrow function to ensure that "this" 
+    // always refers back to the class
+    getCurrentUser = () => {
+      return User.current().then(user => {
+        // This is the safe naviagtion operator
+        // Similar to user && user.id
+        if (user?.id) { 
+          this.setState(state => {
+            return { user }
+          })
+        }
       })
-    })
-        }
-        handleSubmit(params){
-          // params look like this : {email: 'js@winterfell.gov', password: 'supersecret'}
-          Session.create(params).then(()=>{
-            return Session.currentUser()}
-            ).then(user=>{
-              console.log('user', user);
-              this.setState((state)=>{
-                return {user:user}
-              })
-            })
-      
-        }
-        destroySession(){
-          Session.destroy()
-          .then(res=>{
-            this.setState(
-                (
-                state=>{return {user:null}}
-                )
-              )
-            })
-        }
+    }
+  
+    onSignOut = () => {
+      this.setState({
+        user: null
+      })
+    }
     render() {
         return(
         <BrowserRouter>
-            <NavBar currentUser={this.state.user} destroySession={this.destroySession}/>
+            <NavBar currentUser={this.state.user} onSignOut={this.onSignOut}/>
             <Switch>
             <Route path='/' exact render={() => <div>Hello World</div> } />
-            {/*<Route path='/products/new' component={ProductNewPage} />*/}
-            <AuthRoute path='/products/new' isAuth={this.state.user} component={ProductNewPage}/>
-
+            <Route exact path='/sign_in' render={(routeProps)=><SignInPage {...routeProps} onSignIn={this.getCurrentUser}/>} />
+            <Route 
+              exact
+              path='/sign_up'
+              render={(routeProps) => <SignUpPage {...routeProps} onSignUp={this.getCurrentUser} />}
+            />
+            <AuthRoute 
+              // The !! turns something "truthy" or "falsy" to true and false respectively
+              isAuthenticated={!!this.state.user}
+              exact
+              path='/products/new'
+              component={ProductNewPage}
+            />
             {/*<Route path='/products/:id' component={ ProductShowPage } />*/}
-            <AuthRoute path='/products/:id' isAuth={this.state.user} component={ProductShowPage}/>
+            <AuthRoute 
+              // The !! turns something "truthy" or "falsy" to true and false respectively
+              isAuthenticated={!!this.state.user}
+              exact
+              path='/products/:id'
+              component={ProductShowPage}
+            />
             <Route path='/products' exact component={ ProductIndexPage }/>
-            <Route path='/sign_in' render={(routeProps)=><SignInPage handleSubmit={this.handleSubmit} {...routeProps}/>} />
-            
             </Switch>
         </BrowserRouter>
         )

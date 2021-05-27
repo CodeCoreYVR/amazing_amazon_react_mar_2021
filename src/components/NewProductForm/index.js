@@ -16,6 +16,7 @@ const NewProductForm = ({ createProduct }) => {
 
   return(
     <form onSubmit={handleSubmit}>
+      <h2>New Product</h2>
       <div>
         <label htmlFor='title'>Title</label>
         <br />
