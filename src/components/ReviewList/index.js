@@ -1,3 +1,4 @@
+import React from 'react';
 import { ReviewDetails } from '../ReviewDetails'
 
 export function ReviewList(props) {
@@ -15,7 +16,7 @@ export function ReviewList(props) {
             body={body}
             reviewer={reviewer ? reviewer : ""}
             createdAt={created_at}
-            onDeleteClick={id => props.onReviewDeleteClick(id)}
+            deleteReview={id => deleteReview(id)}
             {...review}
           />
         )

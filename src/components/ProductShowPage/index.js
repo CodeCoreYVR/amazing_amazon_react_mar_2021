@@ -18,23 +18,22 @@ class ProductShowPage extends Component {
     Product.show(this.props.match.params.id).then((product) => {
       this.setState((state) => {
         return {
-          product
+          product: product
         }
       })
     })
   }
 
-  deleteReview(reviewId) {
-    const {
-        product,
-        product: { reviews },
-    } = this.state
-
-    this.setState({
+  deleteReview(id) {
+    this.setState((state)=>{
+      return{
         product: {
-            ...product,
-            reviews: reviews.filter(r => r.id !== reviewId),
-        },
+          ...state.product,
+          reviews: state.product.reviews.filter((r) => {
+            return r.id !== id;
+          })
+        }
+      }
     });
   }
 
@@ -47,7 +46,7 @@ class ProductShowPage extends Component {
   // }
 
   render() {
-    const { id, title, description, created_at, seller, reviews, sale_price } = this.state.product;
+    const { id, title, description, created_at, seller, reviews, price } = this.state.product;
       return (
           <div className="ProductShowPage">
                 {
@@ -55,15 +54,15 @@ class ProductShowPage extends Component {
                     <ProductDetails 
                         id={id}
                         title={title}
-                        price={sale_price}
+                        price={price}
                         description={description}
                         created_at={created_at}
-                        seller={seller ? seller.full_name : ""}
+                        seller={seller.id ? seller.full_name : ""}
                     /> :
                     <div>Product is loading...</div>
                 }
               <ReviewList
-              onReviewDeleteClick={this.deleteReview}
+              deleteReview={this.deleteReview}
               reviews={reviews} />  
           </div>
       );
