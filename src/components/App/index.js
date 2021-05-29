@@ -54,7 +54,7 @@ class App extends Component {
         <BrowserRouter>
             <NavBar currentUser={this.state.user} onSignOut={this.onSignOut}/>
             <Switch>
-            <Route path='/' exact render={() => <div>Hello World</div> } />
+            <Route exact path='/' render={() => <div>Hello World</div> } />
             <Route exact path='/sign_in' render={(routeProps)=><SignInPage {...routeProps} onSignIn={this.getCurrentUser}/>} />
             <Route 
               exact

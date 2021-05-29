@@ -2,7 +2,8 @@ import { StarRating } from './StarRating'
 
 export function ReviewDetails(props) {
   /** This way of destructuring props gives the same result as in Product Details */
-  let { id, rating, body, createdAt, reviewer, deleteReview } = props
+  let { id, rating, body, created_at, reviewer, deleteReview } = props
+  console.log(`Reviewer: ${reviewer}`)
   return (
     <div>
       <hr/>
@@ -12,7 +13,7 @@ export function ReviewDetails(props) {
       <p>id: {id}</p>
       <p>body: {body}</p>
       <p>Reviewed by: {reviewer}</p>
-      <p>createdAt: {createdAt}</p>{' '}
+      <p>created_at: {created_at}</p>{' '}
       <button onClick={ () => deleteReview(id) }>Delete</button>
       <hr/>
     </div>

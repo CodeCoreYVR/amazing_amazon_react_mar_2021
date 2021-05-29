@@ -18,7 +18,8 @@ class ProductShowPage extends Component {
     Product.show(this.props.match.params.id).then((product) => {
       this.setState((state) => {
         return {
-          product: product
+          product: product,
+          ...state.product.reviews 
         }
       })
     })
@@ -46,7 +47,8 @@ class ProductShowPage extends Component {
   // }
 
   render() {
-    const { id, title, description, created_at, seller, reviews, price } = this.state.product;
+    const { id, title, description, created_at, seller_full_name , price } = this.state.product;
+    console.log(`Productreviews: ${this.state.product.reviews}`)
       return (
           <div className="ProductShowPage">
                 {
@@ -57,13 +59,13 @@ class ProductShowPage extends Component {
                         price={price}
                         description={description}
                         created_at={created_at}
-                        seller={seller.id ? seller.full_name : ""}
+                        seller_full_name={seller_full_name ? seller_full_name : ""}
                     /> :
                     <div>Product is loading...</div>
                 }
               <ReviewList
               deleteReview={this.deleteReview}
-              reviews={reviews} />  
+              reviews={this.state.product.reviews} />  
           </div>
       );
   }
